@@ -16,30 +16,24 @@ class Solution:
     def splitListToParts(self, head: Optional[ListNode], k: int) -> List[Optional[ListNode]]:
         count = 0
         temp = head
-        print(head)
-        arr = []
+        parts = []
         while temp:
-            if temp:
-                arr.append(temp.val)
-                count += 1
-                temp = temp.next
-        print(arr)
-        dic = dict()
-        for i in range(k):
-            dic[i] = []
-        j = 0
-        for i in range(len(arr)):
-            dic[j].append(arr[i])
-            j += 1
-            if j > k - 1:
-                j = 0
+            count += 1
+            temp = temp.next
 
-        ans = list(dic.values())
-        print(ans)
-        ls = []
-        for i in range(len(ans)):
-            temp = ListNode(ans[i][0], None)
-            for j in range(len(ans[j])):
-                temp.next = temp
+        base, extra = divmod(count, k)
+        cur = head
+        dummy = ListNode()
+        for _ in range(k):
+            print(cur)
+            parts.append(cur)
+            for _ in range(base + (extra > 0)):
+                dummy = cur
+                cur = cur.next
 
-        return ls
+            if (extra > 0):
+                extra -= 1
+                
+            dummy.next = None
+        print(parts)
+        return parts
